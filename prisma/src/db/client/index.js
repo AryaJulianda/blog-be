@@ -133,6 +133,10 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "rhel-openssl-1.0.x"
       }
     ],
     "previewFeatures": [],
@@ -158,8 +162,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "Ly8gc2NoZW1hLnByaXNtYQoKZ2VuZXJhdG9yIGNsaWVudCB7CiAgcHJvdmlkZXIgICAgICAgICAgICAgPSAicHJpc21hLWNsaWVudC1qcyIKICBvdXRwdXQgICAgICAgICAgICAgICA9ICIuL3NyYy9kYi9jbGllbnQiCiAgY3JlYXRlU2hhZG93RGF0YWJhc2UgPSBmYWxzZQp9CgpkYXRhc291cmNlIGRiIHsKICBwcm92aWRlciA9ICJwb3N0Z3Jlc3FsIgogIHVybCAgICAgID0gZW52KCJEQVRBQkFTRV9VUkwiKQp9Cgptb2RlbCBBcnRpY2xlIHsKICBpZCAgICAgICAgIEludCAgICAgIEBpZCBAZGVmYXVsdChhdXRvaW5jcmVtZW50KCkpCiAgdGl0bGUgICAgICBTdHJpbmcKICBjb250ZW50ICAgIFN0cmluZwogIGRhdGUgICAgICAgRGF0ZVRpbWUKICBpbWcgICAgICAgIFN0cmluZyAgIEBkZWZhdWx0KCJub3QgZm91bmQiKQogIGF1dGhvck5hbWUgU3RyaW5nICAgCn0K",
-  "inlineSchemaHash": "5ed844a220de0d75ea5ff856f5aca5c153844413c1f0cc1c99525c5f395a7403",
+  "inlineSchema": "Ly8gc2NoZW1hLnByaXNtYQoKZ2VuZXJhdG9yIGNsaWVudCB7CiAgcHJvdmlkZXIgICAgICAgICAgICAgPSAicHJpc21hLWNsaWVudC1qcyIKICBvdXRwdXQgICAgICAgICAgICAgICA9ICIuL3NyYy9kYi9jbGllbnQiCiAgYmluYXJ5VGFyZ2V0cyA9IFsibmF0aXZlIiwgInJoZWwtb3BlbnNzbC0xLjAueCJdCiAgY3JlYXRlU2hhZG93RGF0YWJhc2UgPSBmYWxzZQp9CgpkYXRhc291cmNlIGRiIHsKICBwcm92aWRlciA9ICJwb3N0Z3Jlc3FsIgogIHVybCAgICAgID0gZW52KCJEQVRBQkFTRV9VUkwiKQp9Cgptb2RlbCBBcnRpY2xlIHsKICBpZCAgICAgICAgIEludCAgICAgIEBpZCBAZGVmYXVsdChhdXRvaW5jcmVtZW50KCkpCiAgdGl0bGUgICAgICBTdHJpbmcKICBjb250ZW50ICAgIFN0cmluZwogIGRhdGUgICAgICAgRGF0ZVRpbWUKICBpbWcgICAgICAgIFN0cmluZyAgIEBkZWZhdWx0KCJub3QgZm91bmQiKQogIGF1dGhvck5hbWUgU3RyaW5nICAgCn0K",
+  "inlineSchemaHash": "7a6f1cf82471d851d888202c86f7a803095eb34cffa813bd28579cb6b5acf927",
   "noEngine": false
 }
 
@@ -199,6 +203,10 @@ Object.assign(exports, Prisma)
 // file annotations for bundling tools to include these files
 path.join(__dirname, "query_engine-windows.dll.node");
 path.join(process.cwd(), "prisma/src/db/client/query_engine-windows.dll.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-rhel-openssl-1.0.x.so.node");
+path.join(process.cwd(), "prisma/src/db/client/libquery_engine-rhel-openssl-1.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "prisma/src/db/client/schema.prisma")
