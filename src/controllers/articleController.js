@@ -1,4 +1,4 @@
-const { PrismaClient } = require("../../prisma/src/db/client");
+const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 // Create a new article
