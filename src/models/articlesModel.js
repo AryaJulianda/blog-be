@@ -1,9 +1,8 @@
 const pool = require('../config/db');
 
-// Membuat artikel baru
-const createArticle = async (title, content, author_name, img) => {
-  const query = 'INSERT INTO articles (title, content, author_name, img) VALUES ($1, $2, $3, $4) RETURNING *';
-  const values = [title, content, author_name, img];
+exports.createArticle = async (user_id, title, content, img) => {
+  const query = 'INSERT INTO articles (title, content, user_id, img) VALUES ($1, $2, $3, $4) RETURNING *';
+  const values = [title, content, user_id, img];
 
   try {
     const result = await pool.query(query, values);
@@ -13,17 +12,16 @@ const createArticle = async (title, content, author_name, img) => {
   }
 };
 
-// Memperbarui artikel berdasarkan ID
-const updateArticle = async (id, title, content, author_name, img) => {
+exports.updateArticle = async (id, user_id, title, content, img) => {
   let query;
   let values;
 
   if (img !== undefined) {
-    query = 'UPDATE articles SET title = $2, content = $3, author_name = $4, img = $5 WHERE id = $1 RETURNING *';
-    values = [id, title, content, author_name, img];
+    query = 'UPDATE articles SET title = $2, content = $3, img = $4 WHERE id = $1 RETURNING *';
+    values = [id, title, content, img];
   } else {
-    query = 'UPDATE articles SET title = $2, content = $3, author_name = $4 WHERE id = $1 RETURNING *';
-    values = [id, title, content, author_name];
+    query = 'UPDATE articles SET title = $2, content = $3 WHERE id = $1 RETURNING *';
+    values = [id, title, content];
   }
 
   try {
@@ -34,22 +32,25 @@ const updateArticle = async (id, title, content, author_name, img) => {
   }
 };
 
-
-// Menghapus artikel berdasarkan ID
-const deleteArticle = async (id) => {
-  const query = 'DELETE FROM articles WHERE id = $1';
-  const values = [id];
+exports.deleteArticle = async (id,user_id) => {
+  const query = 'DELETE FROM articles WHERE id = $1 AND user_id = $2 RETURNING *';
+  const values = [id,user_id];
 
   try {
-    await pool.query(query, values);
+    const result = await pool.query(query, values);
+    return result.rows[0]
   } catch (error) {
     throw error;
   }
 };
 
-// Mengambil semua artikel
-const getAllArticles = async () => {
-  const query = 'SELECT * FROM articles';
+exports.getAllArticles = async () => {
+  const query = `
+  SELECT articles.*, 
+  users.username AS author_name
+  FROM articles
+  INNER JOIN users ON articles.user_id = users.user_id
+`;
 
   try {
     const result = await pool.query(query);
@@ -59,23 +60,36 @@ const getAllArticles = async () => {
   }
 };
 
-// Menemukan artikel berdasarkan ID
-const getArticleById = async (id) => {
-  const query = 'SELECT * FROM articles WHERE id = $1';
-  const values = [id];
+exports.getAllArticlesByUserId = async (user_id) => {
+  const query = `
+    SELECT articles.*, 
+    users.username AS author_name
+    FROM articles
+    INNER JOIN users ON articles.user_id = users.user_id
+    WHERE articles.user_id = $1
+  `;
 
   try {
-    const result = await pool.query(query, values);
-    return result.rows[0];
+    const result = await pool.query(query,[user_id]);
+    return result.rows;
   } catch (error) {
     throw error;
   }
 };
 
-module.exports = {
-  createArticle,
-  updateArticle,
-  deleteArticle,
-  getAllArticles,
-  getArticleById,
+exports.getArticleById = async (id) => {
+  const query = `
+  SELECT articles.*, 
+  users.username AS author_name
+  FROM articles
+  INNER JOIN users ON articles.user_id = users.user_id
+  WHERE articles.id = $1
+`;
+
+  try {
+    const result = await pool.query(query, [id]);
+    return result.rows[0];
+  } catch (error) {
+    throw error;
+  }
 };
